@@ -7,8 +7,19 @@ automate repetitive administrative, compliance, and operational control processe
 They system is intended to reduce manual processing, improve data consistency, strengthen internal controls, and provide an auditable framework for monitoring operational
 activities.
 
+Phase 1 of PAS focuess
 
-**2. Goals**
+
+**2. Objectives**
+
+The primary objectives of PAS are:
+1. **Process Automation:** reduce manual intervention in recurring administrative and control activities.
+2. **Data Integrity:** validate information across forms, documents, and system-generated records while reducing human error that occur during manual inputs.
+3. **Operational Efficiency:** streamline the workflow of the Business Management Unit and easing the internal control testing process.
+4. **Centralised Recordkeeping:** maintain consistent, uniquely identifiable records of submissions, processing outcomes, and exceptions.
+5. **Auditability:** Establish traceable records of transactions, validation outcomes, system actions, and authorised overrides.
+
+PAS is designed to **assist** the BMU in performing their responsibilities rather than replace established approval authorities, professional judgment, or human oversight.
 
 **Phase 1: Automated Credit Proposal Submission Register**
 
