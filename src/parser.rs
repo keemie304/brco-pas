@@ -31,7 +31,6 @@ pub fn parse_pdf(filepath: &str) -> Result<PDFExtract,String> {
 
   Ok(extracted_details)
 
-
 }
 
 pub fn parse_credit_proposal(filepath:&str) -> Result<PdfProcessResult,String> {
