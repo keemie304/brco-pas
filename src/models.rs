@@ -24,6 +24,7 @@ pub struct Submission {
   ao_code: u16,
   submission_date: String,
   proposal: CreditProposal,
+  approver: Approver,
 }
 
 impl Submission {
@@ -32,9 +33,14 @@ impl Submission {
     ao_code: u16,
     submission_date: String,
     proposal: CreditProposal,
+    approver: Approver,
   ) -> Self {
-    Self{ao_name, ao_code,submission_date,proposal}
+    Self{ao_name, ao_code,submission_date,proposal,approver}
   }
+
+  pub fn get_approver(&self) -> Approver {
+        self.approver
+    }
 }
 
 #[derive(Debug)]
@@ -75,7 +81,8 @@ impl ProposalIDGenerator {
 
 
 //declaring enums for immutable fields
-enum Approver {
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum Approver {
   GCC,
   CCC,
   EXCO,

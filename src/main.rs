@@ -1,24 +1,54 @@
-use brco_pas::models::{CreditProposal,Submission,ProposalIDGenerator};
+use regex::Regex;
+use pdf_inspector::process_pdf;
 
-fn main() {
+fn main() -> Result<(), Box<dyn std::error::Error>> {
 
-  let mut generator = ProposalIDGenerator::new(2026, 1);
+   let result = process_pdf(
+        "sample_data/sample_credit_proposal_one.pdf"
+    );
+
+    match &result {
+        Ok(text) => {
+            println!("PDF processed successfully!");
+            println!("{:#?}", text);
+        }
+
+        Err(error) => {
+            eprintln!("Failed to process PDF: {}", error);
+        }
+    }
+
+  let text = result.unwrap().markdown;
+  println!("The text is:\n");
+  println!("{:#?}",text);
+
+  let markdown = text.as_deref().unwrap();
+
+  println!("{}",markdown);
+
+  let re = Regex::new(r"\*\*Customer CIF:\*\*\s*(\d+)").unwrap();
+
+  let captures = re.captures(markdown).unwrap();
+
+  let cif = captures.get(1).unwrap().as_str();
+
+  println!("Extract CIF: {}", cif);
+
+  let 
 
 
-  let test_proposal = CreditProposal::new(
-    String::from("123456"),
-    String::from("Test Company Sdn Bhd"),
-    &mut generator,
-  ).expect("Failed to generate credit proposal");
+  /*
+    let pattern = Regex::new(r"Customer CIF:\s*(\d+)")?;
 
-  println!("{:#?}",test_proposal);
+  let captures = pattern.captures(text).ok_or("CIF not found")?;
 
-  let test_submission = Submission::new(
-    String::from("Test AO"),
-    100,
-    String::from("17Nov2026"),
-    test_proposal,
-  );
 
-  println!("{:#?}",test_submission);
+
+  
+   */
+
+
+
+
+  Ok(())
 }
