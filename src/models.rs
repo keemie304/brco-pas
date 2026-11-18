@@ -2,9 +2,9 @@
 
 #[derive(Debug)]
 pub struct CreditProposal {
-  customer_cif: String,
-  customer_name: String,
-  credit_proposal_id: String,
+  pub customer_cif: String,
+  pub customer_name: String,
+  pub credit_proposal_id: String,
 }
 impl CreditProposal {
   pub fn new (
@@ -21,6 +21,20 @@ impl CreditProposal {
   }
   pub fn get_name(&self) -> &str {
     &self.customer_name
+  }
+  pub fn get_proposal_id(&self) -> &str {
+    &self.credit_proposal_id
+  }
+  pub fn from_database(
+    customer_cif:String,
+    customer_name:String,
+    credit_proposal_id:String,
+  ) -> Self {
+    Self {
+      customer_cif,
+      customer_name,
+      credit_proposal_id,
+    }
   }
 }
 

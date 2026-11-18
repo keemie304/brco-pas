@@ -6,3 +6,4 @@ edition = "2024"
 [dependencies]
 pdf-inspector = "1.26.1"
 regex = "1.13.1"
+rusqlite = { version = "0.43.0", features = ["bundled"] }
