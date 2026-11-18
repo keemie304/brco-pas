@@ -1,7 +1,7 @@
 **BRCO Process Automation System**
 
 **1. Introduction**
-The Process Automation System (PAS) is an automated system implemented for the Business Management Unit, Corporate Banking Department, Baiduri Bank. The PAS is intended to
+The Process Automation System (PAS) is an automated system implemented for business units where manual repetitive work is still prevalent. The PAS is intended to
 automate repetitive administrative, compliance, and operational control processes within a corporate banking environment.
 
 They system is intended to reduce manual processing, improve data consistency, strengthen internal controls, and provide an auditable framework for monitoring operational
@@ -19,7 +19,7 @@ The primary objectives of PAS are:
 4. **Centralised Recordkeeping:** maintain consistent, uniquely identifiable records of submissions, processing outcomes, and exceptions.
 5. **Auditability:** Establish traceable records of transactions, validation outcomes, system actions, and authorised overrides.
 
-PAS is designed to **assist** the BMU in performing their responsibilities rather than replace established approval authorities, professional judgment, or human oversight.
+PAS is designed to **assist** staff in performing their responsibilities rather than replace established approval authorities, professional judgment, or human oversight.
 
 **Phase 1: Automated Credit Proposal Submission Register**
 
@@ -28,7 +28,7 @@ PAS is designed to **assist** the BMU in performing their responsibilities rathe
 **3. System Architecture**
 
 PAS is designed to be modular, separating workflo orchestration, business logic, persistent storage, and external integrations. It is intended to be implemented and embedded
-within the core Microsoft Office systems currently being used. 
+within core Microsoft Office systems currently being used. 
 
 PAS is divided into five principle layers with clear assignment of responsibilities:
 
