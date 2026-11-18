@@ -1,3 +1,12 @@
+/*
+This file parses the Credit Proposal PDFs uploaded by the AOs on the SharePoint list. 
+After parsing the PDFs, the program extracts the markdown which contains the files inputs etc.
+It is then passed on to a pattern 
+The function parse_pdf eventually returns the extract_customer_cif & extract_customer_name 
+which will then pass on to validation.rs which checks whether the submission details matches the 
+information in the credit proposal.
+ */
+
 use regex::Regex;
 use crate::models::PDFExtract;
 use pdf_inspector::{process_pdf,PdfProcessResult};
@@ -7,6 +16,23 @@ use pdf_inspector::{process_pdf,PdfProcessResult};
 const CUSTOMER_NAME_PATTERN: &str = r"\*\*Customer Name:\*\*\s*(.*?)\s*\*\*Customer CIF:\*\*";
 const CUSTOMER_CIF_PATTERN: &str  = r"\*\*Customer CIF:\*\*\s*(\d+)";
 
+pub fn parse_pdf(filepath: &str) -> Result<PDFExtract,String> {
+
+  let pdf = parse_credit_proposal(filepath)?;
+
+  let customer_name = extract_name(&pdf)?;
+
+  let customer_cif = extract_cif(&pdf)?;
+
+  let extracted_details = PDFExtract::new(
+    customer_name,
+    customer_cif,
+  );
+
+  Ok(extracted_details)
+
+
+}
 
 pub fn parse_credit_proposal(filepath:&str) -> Result<PdfProcessResult,String> {
 

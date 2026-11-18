@@ -16,6 +16,12 @@ impl CreditProposal {
 
     Ok(Self{customer_cif,customer_name,credit_proposal_id})
   }
+  pub fn get_cif(&self) -> &str {
+    &self.customer_cif
+  }
+  pub fn get_name(&self) -> &str {
+    &self.customer_name
+  }
 }
 
 #[derive(Debug)]
@@ -41,12 +47,29 @@ impl Submission {
   pub fn get_approver(&self) -> Approver {
         self.approver
     }
+  pub fn proposal(&self) -> &CreditProposal {
+    &self.proposal
+  }
 }
 
 #[derive(Debug)]
 pub struct PDFExtract {
   extract_customer_name: String,
   extract_customer_cif: String,
+}
+impl PDFExtract {
+  pub fn new (
+    extract_customer_name: String,
+    extract_customer_cif: String,
+  ) -> Self {
+    Self{extract_customer_name,extract_customer_cif}
+  }
+  pub fn get_extracted_cif(&self) -> &str {
+    &self.extract_customer_cif
+  }
+  pub fn get_extracted_name(&self) -> &str {
+    &self.extract_customer_name
+  }
 }
 
 #[derive(Debug)]
