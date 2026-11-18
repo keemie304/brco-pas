@@ -1,10 +1,12 @@
 use regex::Regex;
 use pdf_inspector::process_pdf;
+use brco_pas::parser::{parse_credit_proposal,extract_cif,extract_name};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
 
-   let result = process_pdf(
-        "sample_data/sample_credit_proposal_one.pdf"
+/*
+let result = process_pdf(
+        "sample_data/sample_credit_proposal_three.pdf"
     );
 
     match &result {
@@ -17,38 +19,19 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             eprintln!("Failed to process PDF: {}", error);
         }
     }
+ */
+  let result = parse_credit_proposal("sample_data/sample_credit_proposal_three.pdf")?;
 
-  let text = result.unwrap().markdown;
-  println!("The text is:\n");
-  println!("{:#?}",text);
+  let cif = extract_cif(&result)?;
 
-  let markdown = text.as_deref().unwrap();
+  println!("The customer CIF is {}",cif);
 
-  println!("{}",markdown);
+  let customer_name = extract_name(&result)?;
 
-  let re = Regex::new(r"\*\*Customer CIF:\*\*\s*(\d+)").unwrap();
-
-  let captures = re.captures(markdown).unwrap();
-
-  let cif = captures.get(1).unwrap().as_str();
-
-  println!("Extract CIF: {}", cif);
-
-  let 
-
-
-  /*
-    let pattern = Regex::new(r"Customer CIF:\s*(\d+)")?;
-
-  let captures = pattern.captures(text).ok_or("CIF not found")?;
-
-
+  println!("The customer name is {}", customer_name);
+   
 
   
-   */
-
-
-
 
   Ok(())
 }
