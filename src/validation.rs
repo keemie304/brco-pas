@@ -7,17 +7,23 @@ A match will return 'true' while a mismatch will return 'false'.
  */
 use crate::models::{SubmittedProposal,PDFExtract};
 
-pub fn validate(submission: &SubmittedProposal, extracted: &PDFExtract) -> &'static str {
+pub fn validate(submission: &SubmittedProposal, extracted: &PDFExtract) -> bool {
 
   let cif_check = validate_cif(&submission, &extracted);
 
   let name_check = validate_name(&submission, &extracted);
 
+  let mut pass = false;
+
   if cif_check && name_check {
-    "Both data in Credit Proposal Submission and Credit Proposal matches"
+    println!("Both data in Credit Proposal Submission and Credit Proposal matches");
+    pass = true;
   } else {
-    "Data Mismatch"
-  }
+    println!("Data Mismatch");
+    pass = false;
+  };
+
+  pass
 
 }
 
