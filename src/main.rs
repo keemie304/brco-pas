@@ -1,23 +1,41 @@
-use brco_pas::models::{CreditProposal,Submission,Approver,SubmittedProposal};
+use brco_pas::models::{SubmittedProposal};
 use brco_pas::parser::parse_pdf;
-use brco_pas::validation::{validate_cif,validate_name,validate};
+use brco_pas::validation::{validate};
 use brco_pas::database::{initialise_database,create_entry,query_proposal};
-use rusqlite::{Connection,Result,params};
 
-fn main() -> Result<()> {
+const DB_FILEPATH: &str = "db/test_db_one.db";
 
-  let submitted_proposal = SubmittedProposal::new(String::from("123456"),String::from("test customer one"));
+fn main() -> Result<(), Box<dyn std::error::Error>> {
 
+  let submission_one = SubmittedProposal::new(
+    String::from("123456"),
+    String::from("Test Customer One Sdn. Bhd.")
+  );
 
-  let mut conn = initialise_database("db/brco_pas.db")?;
+  let sample_one = parse_pdf("sample_data/sample_credit_proposal_one.pdf")?;
 
-  let proposal_id = create_entry(&mut conn, &submitted_proposal, 2026)?;
+  let checks = validate(&submission_one,&sample_one);
 
+  if checks == "Both data in Credit Proposal Submission and Credit Proposal matches" {
+    let mut conn = initialise_database(DB_FILEPATH)?;
 
-  let proposal = query_proposal(&conn, "CB260001")?;
+    let proposal = create_entry(&mut conn, &submission_one, 2026)?;
 
-  println!("{:#?}",proposal);
+    println!("The proposal is seen here {:?}",proposal);
+
+    let retrieved = query_proposal(&conn, proposal.get_proposal_id())?;
+
+    println!("Retrieved proposal: {:?}",retrieved);
+
+    assert_eq!(
+      proposal.get_proposal_id(),
+      retrieved.get_proposal_id(),
+    );
+  } else {
+    println!("Cannot input the proposal into the database");
+  }
 
 
   Ok(())
+
 }

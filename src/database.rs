@@ -44,8 +44,9 @@ pub fn create_entry(
   )?;
   tx.commit()?;
 
-  println!("Credit proposal logged. Proposal ID is {}",sequence);
-  Ok(proposal_id)
+  println!("Credit proposal logged. Proposal ID is {}",proposal_id);
+  Ok(CreditProposal::new(
+    proposal_id, proposal.get_submitted_cif().to_string(), proposal.get_submitted_name().to_string()))
 }
 
 pub fn query_proposal(
@@ -53,7 +54,7 @@ pub fn query_proposal(
   proposal_id: &str,
 ) -> Result<CreditProposal> {
   let proposal_query = conn.query_row(
-      "SELECT customer_cif, customer_name, credit_proposal_id
+      "SELECT credit_proposal_id,customer_cif, customer_name 
       FROM CreditProposal
       WHERE credit_proposal_id = ?1",
       [proposal_id],

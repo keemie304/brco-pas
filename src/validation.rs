@@ -5,9 +5,9 @@ from the Credit Proposal and evaluates whether they are a match.
 A match will return 'true' while a mismatch will return 'false'.
 
  */
-use crate::models::{Submission,PDFExtract};
+use crate::models::{SubmittedProposal,PDFExtract};
 
-pub fn validate(submission: &Submission, extracted: &PDFExtract) -> &'static str {
+pub fn validate(submission: &SubmittedProposal, extracted: &PDFExtract) -> &'static str {
 
   let cif_check = validate_cif(&submission, &extracted);
 
@@ -21,8 +21,8 @@ pub fn validate(submission: &Submission, extracted: &PDFExtract) -> &'static str
 
 }
 
-pub fn validate_cif(submission: &Submission,extracted:&PDFExtract) -> bool {
-  let submission_cif = submission.proposal().get_cif();
+pub fn validate_cif(submission: &SubmittedProposal,extracted:&PDFExtract) -> bool {
+  let submission_cif = submission.get_submitted_cif();
 
   let extract_cif = extracted.get_extracted_cif();
 
@@ -32,8 +32,8 @@ pub fn validate_cif(submission: &Submission,extracted:&PDFExtract) -> bool {
 
 }
 
-pub fn validate_name(submission: &Submission,extracted:&PDFExtract) -> bool {
-  let submission_name = submission.proposal().get_name();
+pub fn validate_name(submission: &SubmittedProposal,extracted:&PDFExtract) -> bool {
+  let submission_name = submission.get_submitted_name();
 
   let extract_name = extracted.get_extracted_name();
 
