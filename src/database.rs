@@ -1,8 +1,23 @@
-use rusqlite::{Connection,Result,params};
+use rusqlite::{Connection,Result,params,TransactionBehavior};
 use crate::models::{CreditProposal};
 
 pub fn initialise_database(filepath: &str) -> Result<Connection> {
   let conn = Connection::open(filepath)?;
+
+  conn.execute_batch(
+    "CREATE TABLE IF NOT EXISTS CreditProposal (
+    credit_proposal_id TEXT NOT NULL UNIQUE PRIMARY KEY,
+    customer_name TEXT NOT NULL,
+    customer_cif TEXT NOT NULL);
+
+    )
+    
+    
+    
+    "
+
+
+  );
 
   conn.execute(
     "CREATE TABLE IF NOT EXISTS CreditProposal (
@@ -12,6 +27,9 @@ pub fn initialise_database(filepath: &str) -> Result<Connection> {
     )",
     [],
   )?;
+  conn.execute(
+    "CREATE TABLE IF NOT EXISTS proposal_id_sequences"
+  )
   Ok(conn)
 }
 

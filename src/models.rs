@@ -1,4 +1,6 @@
-// File contains all the data structures required by the PAS
+/*
+This file contains the datastructs and its associated functions that will be used throughout the program.
+*/
 
 #[derive(Debug)]
 pub struct CreditProposal {
