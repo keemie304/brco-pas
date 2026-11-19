@@ -1,5 +1,5 @@
 use rusqlite::{Connection,Result,params,TransactionBehavior};
-use crate::models::{CreditProposal};
+use crate::models::{SubmittedProposal,CreditProposal};
 
 pub fn initialise_database(filepath: &str) -> Result<Connection> {
   let conn = Connection::open(filepath)?;
@@ -22,9 +22,9 @@ pub fn initialise_database(filepath: &str) -> Result<Connection> {
 
 pub fn create_entry(
   conn: &mut Connection,
-  proposal: &CreditProposal,
+  proposal: &SubmittedProposal,
   year:i32,
-) -> Result<String> {
+) -> Result<CreditProposal> {
 
   let tx = conn.transaction_with_behavior(TransactionBehavior::Immediate)?;
   let sequence = next_sequence(&tx, year)?;
@@ -38,8 +38,8 @@ pub fn create_entry(
     "INSERT INTO CreditProposal (credit_proposal_id,customer_cif,customer_name) VALUES (?1,?2,?3)",
     params![
       &proposal_id,
-      proposal.get_cif(),
-      proposal.get_name(),
+      proposal.get_submitted_cif(),
+      proposal.get_submitted_name(),
     ],
   )?;
   tx.commit()?;
@@ -50,13 +50,13 @@ pub fn create_entry(
 
 pub fn query_proposal(
   conn: &Connection,
-  proposal: &CreditProposal,
+  proposal_id: &str,
 ) -> Result<CreditProposal> {
   let proposal_query = conn.query_row(
       "SELECT customer_cif, customer_name, credit_proposal_id
       FROM CreditProposal
       WHERE credit_proposal_id = ?1",
-      [proposal.get_proposal_id()],
+      [proposal_id],
       |row| {
           Ok(CreditProposal::from_database(
               row.get(0)?,

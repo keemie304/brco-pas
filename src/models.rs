@@ -2,6 +2,25 @@
 This file contains the datastructs and its associated functions that will be used throughout the program.
 Throughout the program, the Primary identifier will be Credit_Proposal_ID which is in the format: CBYYXXXX
 */
+#[derive(Debug)]
+pub struct SubmittedProposal {
+  customer_cif: String,
+  customer_name: String,
+}
+impl SubmittedProposal {
+  pub fn new (
+    customer_cif: String,
+    customer_name: String,
+  ) -> Self {
+    Self{customer_cif,customer_name}
+  }
+  pub fn get_submitted_cif(&self) -> &str {
+    &self.customer_cif
+  }
+  pub fn get_submitted_name(&self) -> & str {
+    &self.customer_name
+  }
+}
 
 #[derive(Debug)]
 pub struct CreditProposal {
