@@ -1,22 +1,22 @@
 /*
 This file contains the datastructs and its associated functions that will be used throughout the program.
+Throughout the program, the Primary identifier will be Credit_Proposal_ID which is in the format: CBYYXXXX
 */
 
 #[derive(Debug)]
 pub struct CreditProposal {
-  pub customer_cif: String,
-  pub customer_name: String,
-  pub credit_proposal_id: String,
+  credit_proposal_id: String,
+  customer_cif: String,
+  customer_name: String,
+ 
 }
 impl CreditProposal {
   pub fn new (
+    credit_proposal_id:String,
     customer_cif: String,
     customer_name: String,
-    generator: &mut ProposalIDGenerator,
-  ) -> Result<Self, &'static str> {
-    let credit_proposal_id: String = generator.generate()?;
-
-    Ok(Self{customer_cif,customer_name,credit_proposal_id})
+  ) -> Self {
+   Self{customer_cif,customer_name,credit_proposal_id}
   }
   pub fn get_cif(&self) -> &str {
     &self.customer_cif
@@ -28,14 +28,14 @@ impl CreditProposal {
     &self.credit_proposal_id
   }
   pub fn from_database(
+    credit_proposal_id:String,
     customer_cif:String,
     customer_name:String,
-    credit_proposal_id:String,
   ) -> Self {
     Self {
+      credit_proposal_id,
       customer_cif,
       customer_name,
-      credit_proposal_id,
     }
   }
 }
@@ -87,37 +87,6 @@ impl PDFExtract {
     &self.extract_customer_name
   }
 }
-
-#[derive(Debug)]
-pub struct ProposalIDGenerator {
-  year: u16,
-  sequence: u32,
-}
-impl ProposalIDGenerator {
-  pub fn new(year: u16, sequence:u32) -> Self {
-    Self {
-      year,
-      sequence,
-    }
-  }
-  fn generate(&mut self) -> Result< String, &'static str> {
-    if !(2000..=2099).contains(&self.year) {
-      return Err("Invalid year");
-    }
-    if !(1..=9999).contains(&self.sequence) {
-      return Err("Annual sequence exhausted");
-    }
-
-    let number = format!("CB {:02}{:04}",self.year%100,self.sequence);
-
-    self.sequence +=1;
-
-    Ok(number)
-
-  }
-}
-
-
 
 //declaring enums for immutable fields
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]

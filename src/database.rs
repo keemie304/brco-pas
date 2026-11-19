@@ -10,26 +10,12 @@ pub fn initialise_database(filepath: &str) -> Result<Connection> {
     customer_name TEXT NOT NULL,
     customer_cif TEXT NOT NULL);
 
-    )
-    
-    
-    
-    "
-
-
-  );
-
-  conn.execute(
-    "CREATE TABLE IF NOT EXISTS CreditProposal (
-    customer_cif TEXT NOT NULL,
-    customer_name TEXT NOT NULL,
-    credit_proposal_id TEXT PRIMARY KEY
-    )",
-    [],
+    CREATE TABLE IF NOT EXISTS proposal_id_sequences (
+      registration_year INTEGER PRIMARY KEY,
+      last_sequence INTEGER NOT NULL
+        CHECK (last_sequence BETWEEN 1 AND 9999);"
   )?;
-  conn.execute(
-    "CREATE TABLE IF NOT EXISTS proposal_id_sequences"
-  )
+
   Ok(conn)
 }
 
@@ -40,9 +26,9 @@ pub fn create_entry(
   conn.execute(
     "INSERT INTO CreditProposal (customer_cif,customer_name,credit_proposal_id) VALUES (?1, ?2, ?3)",
     params![
+      proposal.get_proposal_id(),
       proposal.get_cif(),
       proposal.get_name(),
-      proposal.get_proposal_id()
     ],
   )
 }
@@ -67,3 +53,5 @@ pub fn query_proposal(
 
   Ok(proposal_query)
 }
+
+//declaring non publi
