@@ -13,7 +13,7 @@ pub fn validate(submission: &SubmittedProposal, extracted: &PDFExtract) -> bool 
 
   let name_check = validate_name(&submission, &extracted);
 
-  let mut pass = false;
+  let mut pass:bool;
 
   if cif_check && name_check {
     println!("Both data in Credit Proposal Submission and Credit Proposal matches");

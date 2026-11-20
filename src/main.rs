@@ -19,7 +19,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
   if checks {
     let mut conn = initialise_database(DB_FILEPATH)?;
 
-    let proposal = create_entry(&mut conn, &submission_one, 2026)?;
+    let proposal = create_entry(&mut conn, &submission_one, 2027)?;
 
     println!("Proposal has been registered in database");
 
