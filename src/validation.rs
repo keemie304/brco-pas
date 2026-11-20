@@ -9,9 +9,9 @@ use crate::models::{SubmittedProposal,PDFExtract};
 
 pub fn validate(submission: &SubmittedProposal, extracted: &PDFExtract) -> bool {
 
-  let cif_check = validate_cif(&submission, &extracted);
+  let cif_check: bool = validate_cif(&submission, &extracted);
 
-  let name_check = validate_name(&submission, &extracted);
+  let name_check: bool = validate_name(&submission, &extracted);
 
   let mut pass:bool;
 
@@ -28,9 +28,9 @@ pub fn validate(submission: &SubmittedProposal, extracted: &PDFExtract) -> bool 
 }
 
 pub fn validate_cif(submission: &SubmittedProposal,extracted:&PDFExtract) -> bool {
-  let submission_cif = submission.get_submitted_cif();
+  let submission_cif: &str = submission.get_submitted_cif();
 
-  let extract_cif = extracted.get_extracted_cif();
+  let extract_cif: &str = extracted.get_extracted_cif();
 
   let matched: bool = submission_cif == extract_cif;
 
@@ -39,9 +39,9 @@ pub fn validate_cif(submission: &SubmittedProposal,extracted:&PDFExtract) -> boo
 }
 
 pub fn validate_name(submission: &SubmittedProposal,extracted:&PDFExtract) -> bool {
-  let submission_name = submission.get_submitted_name();
+  let submission_name: &str = submission.get_submitted_name();
 
-  let extract_name = extracted.get_extracted_name();
+  let extract_name: &str = extracted.get_extracted_name();
 
   let matched: bool = submission_name == extract_name;
 
