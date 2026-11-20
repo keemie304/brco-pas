@@ -8,7 +8,12 @@ pub fn initialise_database(filepath: &str) -> Result<Connection> {
     "CREATE TABLE IF NOT EXISTS CreditProposal (
     credit_proposal_id TEXT PRIMARY KEY,
     customer_name TEXT NOT NULL,
-    customer_cif TEXT NOT NULL);
+    customer_cif TEXT NOT NULL
+    ao_name TEXT NOT NULL,
+    ao_code TEXT NOT NULL,
+    request_type BLOB
+    );
+    
 
     CREATE TABLE IF NOT EXISTS proposal_id_sequences (
       registration_year INTEGER PRIMARY KEY,
@@ -35,11 +40,14 @@ pub fn create_entry(
   );
 
   tx.execute (
-    "INSERT INTO CreditProposal (credit_proposal_id,customer_cif,customer_name) VALUES (?1,?2,?3)",
+    "INSERT INTO CreditProposal (credit_proposal_id,customer_cif,customer_name) VALUES (?1,?2,?3,?4,?5,?6)",
     params![
       &proposal_id,
       proposal.get_submitted_cif(),
       proposal.get_submitted_name(),
+      proposal.get_submitting_ao_name(),
+      proposal.get_submitting_ao_code(),
+      proposal.get_submitted_request_type(),
     ],
   )?;
   tx.commit()?;

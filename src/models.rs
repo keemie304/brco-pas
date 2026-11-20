@@ -32,7 +32,7 @@ impl SubmittedProposal {
   pub fn get_submitting_ao_code(&self) -> &str {
     &self.ao_code
   }
-  pub fn get_request_type(&self) -> &Vec<RequestType> {
+  pub fn get_submitted_request_type(&self) -> &Vec<RequestType> {
     &self.request_type
   }
 }
