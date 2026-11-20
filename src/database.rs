@@ -1,3 +1,4 @@
+/* 
 use rusqlite::{Connection,Result,params,TransactionBehavior};
 use crate::models::{SubmittedProposal,CreditProposal};
 
@@ -96,3 +97,4 @@ fn next_sequence (
   )?;
   Ok(sequence)
 }
+*/

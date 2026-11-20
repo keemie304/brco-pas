@@ -1,24 +1,14 @@
 use brco_pas::models::{SubmittedProposal,RequestType};
+use brco_pas::parser::{parse_pdf};
 
 
 const DB_FILEPATH: &str = "db/test_db_one.db";
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
 
-  let submission_one = SubmittedProposal::new(
-    String::from("123456"),
-    String::from("Test Customer One"),
-    String::from("ABC"),
-    String::from("100"),
-    vec![RequestType::Increase,RequestType::AnnualReview],
-  );
+  let filepath = parse_pdf("sample_data/sample_proposal_five_v2.pdf")?;
 
-  println!("{:?}",submission_one);
-
-  let request_type = submission_one.get_request_type();
-
-  println!("{:?}",request_type);
-
+  println!("{:?}",filepath);
 
   Ok(())
 

@@ -26,10 +26,10 @@ impl SubmittedProposal {
   pub fn get_submitted_name(&self) -> &str {
     &self.customer_name
   }
-  pub fn get_submitting_ao_name(&self) -> &str {
+  pub fn get_submitted_ao_name(&self) -> &str {
     &self.ao_name
   }
-  pub fn get_submitting_ao_code(&self) -> &str {
+  pub fn get_submitted_ao_code(&self) -> &str {
     &self.ao_code
   }
   pub fn get_submitted_request_type(&self) -> &Vec<RequestType> {
@@ -79,21 +79,21 @@ impl CreditProposal {
 
 #[derive(Debug)]
 pub struct PDFExtract {
-  extract_customer_name: String,
   extract_customer_cif: String,
+  extract_customer_name: String,
   extract_ao_name: String,
   extract_ao_code: String,
   extract_request_type: Vec<RequestType>,
 }
 impl PDFExtract {
   pub fn new (
-    extract_customer_name: String,
     extract_customer_cif: String,
+    extract_customer_name: String,
     extract_ao_name: String,
     extract_ao_code: String,
     extract_request_type: Vec<RequestType>,
   ) -> Self {
-    Self{extract_customer_name,extract_customer_cif,extract_ao_name,extract_ao_code,extract_request_type}
+    Self{extract_customer_cif,extract_customer_name,extract_ao_name,extract_ao_code,extract_request_type}
   }
   pub fn get_extracted_cif(&self) -> &str {
     &self.extract_customer_cif
