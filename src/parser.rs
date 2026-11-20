@@ -15,16 +15,19 @@ use pdf_inspector::{process_pdf,PdfProcessResult};
 
 const CUSTOMER_NAME_PATTERN: &str = r"\*\*Customer Name:\*\*\s*(.*?)\s*\*\*Customer CIF:\*\*";
 const CUSTOMER_CIF_PATTERN: &str  = r"\*\*Customer CIF:\*\*\s*(\d+)";
+const AO_NAME_PATTERN: &str = r"\*\*AO Name:\*\*";
+const AO_CODE_PATTERN: &str = r"";
+const REQUEST_TYPE_PATTERN: &str = r"";
 
 pub fn parse_pdf(filepath: &str) -> Result<PDFExtract,String> {
 
-  let pdf = parse_credit_proposal(filepath)?;
+  let pdf: PdfProcessResult = parse_credit_proposal(filepath)?;
 
-  let customer_name = extract_name(&pdf)?;
+  let customer_name: String = extract_name(&pdf)?;
 
-  let customer_cif = extract_cif(&pdf)?;
+  let customer_cif: String = extract_cif(&pdf)?;
 
-  let extracted_details = PDFExtract::new(
+  let extracted_details: PDFExtract = PDFExtract::new(
     customer_name,
     customer_cif,
   );
@@ -35,7 +38,7 @@ pub fn parse_pdf(filepath: &str) -> Result<PDFExtract,String> {
 
 pub fn parse_credit_proposal(filepath:&str) -> Result<PdfProcessResult,String> {
 
-  let result = process_pdf(filepath);
+  let result: Result<PdfProcessResult, pdf_inspector::PdfError> = process_pdf(filepath);
 
   match result {
     Ok(pdf) => Ok(pdf),
@@ -44,17 +47,17 @@ pub fn parse_credit_proposal(filepath:&str) -> Result<PdfProcessResult,String> {
 }
 
 pub fn extract_cif(pdf:&PdfProcessResult) -> Result<String,String> {
-  let markdown = pdf.markdown.as_deref().ok_or("No markdown extracted")?;
+  let markdown: &str = pdf.markdown.as_deref().ok_or("No markdown extracted")?;
 
 
   //initialising the Regex CIF pattern
-  let cif_pattern = Regex::new(CUSTOMER_CIF_PATTERN).map_err(|e| e.to_string())?;
+  let cif_pattern: Regex = Regex::new(CUSTOMER_CIF_PATTERN).map_err(|e| e.to_string())?;
 
   //finding cif
-  let captured_cif = cif_pattern.captures(markdown).ok_or("Customer CIF not found")?;
+  let captured_cif: regex::Captures<'_> = cif_pattern.captures(markdown).ok_or("Customer CIF not found")?;
 
   //extract cif from captured_cif
-  let cif = captured_cif.get(1).ok_or("CIF is missing")?.as_str().to_string();
+  let cif: String = captured_cif.get(1).ok_or("CIF is missing")?.as_str().to_string();
 
   Ok(cif)
 
@@ -62,18 +65,22 @@ pub fn extract_cif(pdf:&PdfProcessResult) -> Result<String,String> {
 }
 
 pub fn extract_name(pdf:&PdfProcessResult) -> Result<String,String> {
-  let markdown = pdf.markdown.as_deref().ok_or("No markdown extracted")?;
+  let markdown: &str = pdf.markdown.as_deref().ok_or("No markdown extracted")?;
 
 
   //initialising the Regex Customer Name pattern
   let name_pattern = Regex::new(CUSTOMER_NAME_PATTERN).map_err(|e| e.to_string())?;
 
   //finding cif
-  let captured_name = name_pattern.captures(markdown).ok_or("Customer name not found")?;
+  let captured_name: regex::Captures<'_> = name_pattern.captures(markdown).ok_or("Customer name not found")?;
 
   //extract cif from captured_cif
   let customer_name = captured_name.get(1).ok_or("CIF is missing")?.as_str().to_string();
 
   Ok(customer_name)
+
+}
+
+pub fn extract_ao_name(pdf:&PdfProcessResult) ->Result<String,String> {
 
 }
