@@ -141,3 +141,17 @@ pub enum RequestType {
   InterimReview,
   Discussion,
 }
+impl RequestType {
+  pub fn as_str(&self) -> &'static str {
+    match self {
+            RequestType::New => "New",
+            RequestType::Increase => "Increase",
+            RequestType::Reduction => "Reduction",
+            RequestType::Amendment => "Amendment",
+            RequestType::Cancellation => "Cancellation",
+            RequestType::AnnualReview => "Annual Review",
+            RequestType::InterimReview => "Interim Review",
+            RequestType::Discussion => "Discussion",
+    }
+  }
+}
